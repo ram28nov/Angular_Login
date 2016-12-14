@@ -1,0 +1,113 @@
+<html ng-app="app">
+<head>
+<title>Main</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+</head>
+<body ng-controller="ctrl" style="background-color:#C0C0C0">
+<nav class="navbar navbar-inverse">
+<div class="container">
+  <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="" ng-click="homeLink()">Main Page</a>
+        </div>
+  <div id="navbar" class="collapse navbar-collapse">
+  
+  <ul class="nav navbar-nav">
+    <li><a href="" ng-click="homeLink()">Home</a></li>
+    
+    <li><a href="" ng-click="loginLink()">Login</a></li>
+    
+    <li><a href="" ng-click="aboutLink()">About Us</a></li>
+  </ul>
+  </div>
+  
+</div>
+</nav>
+
+<div class="container">
+<div ng-view></div>
+</div>
+
+<script>
+var app = angular.module("app",['ngRoute']);
+app.config(function($routeProvider){
+	$routeProvider
+	.when('/',{templateUrl:'index.html',controller:'indexctrl'})
+	.when('/about',{templateUrl:'about.html',controller:'aboutctrl'})
+	.when('/login',{templateUrl:'login.html',controller:'loginctrl'})
+	.when('/reg',{templateUrl:'registration.html',controller:'regctrl'})
+	.otherwise({redirectTo:'/'});
+});
+app.controller('ctrl',function($scope,$location){
+	console.log("ctrl");
+	$scope.homeLink = function(){
+			$location.path('/');
+	}
+	$scope.aboutLink = function(){
+		$location.path('/about');	
+	}
+	$scope.loginLink = function(){
+		$location.path('/login');
+	}
+	$scope.regLink = function(){
+		$location.path('/reg');
+		}
+	});
+	
+app.controller('indexctrl',function(){
+	console.log("index");
+	});
+	
+app.controller('aboutctrl',function(){
+	console.log("about");
+	});
+	
+app.controller('loginctrl',function($scope,$http,$location){
+	console.log("login");
+	$scope.myUserSubmit = function(){
+		$http.post('login.php',{'username':$scope.myUser.username,'password':$scope.myUser.password})
+		.success(function(data){
+				console.log(data);
+				if(data>0){
+						$location.path('/');
+				}else{
+					$scope.msg = "Invalid Credentials..!";	
+				}
+		})
+	}
+	
+	});	
+	
+app.controller('regctrl',function($scope,$http,$location){
+	console.log("Registration");
+	$scope.myUserReg = function(){
+		$http.post('registration.php',{'name':$scope.myUser.name,'username':$scope.myUser.username,'email':$scope.myUser.email,'password':$scope.myUser.password})
+		.success(function(data){
+				console.log(data);
+				if(data>0){
+					$location.path('/login');
+					}else{
+						$scope.msg = "Registration Failed..!";
+					}
+		})
+		$scope.submitted = false;
+  		$scope.myUserReg = function() {
+    		if ($scope.myForm.$valid) {
+				// Submit as normal
+				} else {
+					$scope.myForm.submitted = true;
+					}
+					}
+		}
+	});
+	
+</script>
+</body>
+</html>

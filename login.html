@@ -1,0 +1,38 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="col-md-8 col-md-offset-3">
+		<h1>Login</h1>
+    </div>    
+    <div class="col-md-8 col-md-offset-3">
+        	<p class="alert alert-warning" ng-show="msg">{{msg}}</p>
+            <form class="form-horizontal">
+            	<div class="form-group has-feedback">
+                	<label class="col-sm-2 control-label">Username</label>
+       				<div class="col-sm-4">
+          			<input type="text" class="form-control" ng-model="myUser.username" name="username" placeholder="Username"/>
+                    <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                </div>
+                </div>
+                <div class="form-group has-feedback">
+                	<label class="col-sm-2 control-label">Password</label>
+       				<div class="col-sm-4">
+          			<input type="password" class="form-control" ng-model="myUser.password" name="password" placeholder="Password"/>
+                    <i class="glyphicon glyphicon-asterisk form-control-feedback"></i>
+                </div>
+                </div>
+                <div class="col-md-offset-3">
+                <ul class="list-group list-inline">
+        			<li><a href="" ng-click="regLink()">New User</a></li>
+                    <li><button type="reset" class="btn btn-success">Reset</button>
+        			<button type="submit" class="btn btn-success" ng-click="myUserSubmit()">Submit</button></li>
+                </ul>
+      			</div>
+            </form>
+    </div>
+</div>
+</body>
+</html>
